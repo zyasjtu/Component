@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd   http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"
+          p:jndiName="java:comp/env/jdbc/Component"/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+          p:dataSource-ref="dataSource"
+          p:mapperLocations="classpath:mappers/*.xml"
+          p:configLocation="classpath:mybatis-config.xml"/>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+          p:basePackage="org.cora.dao"
+          p:sqlSessionFactory-ref="sqlSessionFactory"/>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+          p:dataSource-ref="dataSource"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+
+    <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"
+          p:maxTotal="${redis.maxTotal}"
+          p:maxIdle="${redis.maxIdle}"
+          p:minIdle="${redis.minIdle}"
+          p:maxWaitMillis="${redis.maxWaitMillis}"/>
+
+    <bean id="jedisPool" class="redis.clients.jedis.JedisPool"
+          c:poolConfig-ref="jedisPoolConfig"
+          c:host="${redis.host}"
+          c:port="${redis.port}"/>
+</beans>

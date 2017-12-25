@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <!--rabbitmq连接服务器-->
+    <rabbit:connection-factory id="connectionFactory" host="${rabbitmq.host}" port="${rabbitmq.port}"
+                               username="${rabbitmq.username}" password="${rabbitmq.password}"/>
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!--rabbitmq队列-->
+    <rabbit:queue id="queue_one" name="queue_one" durable="true" auto-delete="false" exclusive="false"/>
+
+    <!--rabbitmq message listener-->
+    <bean id="rabbitMqConsumer" class="org.cora.message.RabbitMqConsumer"/>
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="auto">
+        <rabbit:listener queues="queue_one" ref="rabbitMqConsumer"/>
+    </rabbit:listener-container>
+
+    <!--rabbitmq exchange-->
+    <rabbit:direct-exchange id="exchange_one" name="exchange_one" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="queue_one" key="queue_one_key"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <!--rabbitmq template-->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" exchange="exchange_one"/>
+
+</beans>
