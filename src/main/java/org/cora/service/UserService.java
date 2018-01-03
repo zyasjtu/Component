@@ -2,7 +2,6 @@ package org.cora.service;
 
 import com.alibaba.fastjson.JSONObject;
 import org.cora.form.UserForm;
-import org.cora.model.User;
 
 import javax.servlet.http.HttpServletRequest;
 

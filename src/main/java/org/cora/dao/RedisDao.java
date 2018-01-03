@@ -1,10 +1,8 @@
 package org.cora.dao;
 
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.cora.constant.GlobalConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
