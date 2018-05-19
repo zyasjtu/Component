@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
 
+    @Override
     public JSONObject addUser(UserForm userForm) {
         User user = new User();
         BeanUtils.copyProperties(userForm, user);
@@ -31,6 +32,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
     public JSONObject getUser(String mobile) {
         User user = userDao.getUser(mobile);
         if (null == user) {
@@ -42,6 +44,7 @@ public class UserServiceImpl implements UserService {
         return returnJo;
     }
 
+    @Override
     public JSONObject checkUser(String loginName, String password, HttpServletRequest request) {
         User user = userDao.checkUser(loginName, password);
         if (null == user) {

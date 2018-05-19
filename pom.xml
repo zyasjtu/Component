@@ -24,6 +24,7 @@
     <jedis.version>2.9.0</jedis.version>
     <spring-rabbit.version>2.0.0.RELEASE</spring-rabbit.version>
     <httpclient.version>4.5.4</httpclient.version>
+    <spring-kafka.version>2.1.5.RELEASE</spring-kafka.version>
   </properties>
 
   <dependencies>
@@ -52,7 +53,6 @@
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
       <version>${servlet-api.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.mybatis</groupId>
@@ -83,7 +83,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.aspectj</groupId>
@@ -115,8 +114,23 @@
       <artifactId>httpclient</artifactId>
       <version>${httpclient.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.kafka</groupId>
+      <artifactId>spring-kafka</artifactId>
+      <version>${spring-kafka.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <finalName>component</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+    </plugins>
   </build>
 </project>
