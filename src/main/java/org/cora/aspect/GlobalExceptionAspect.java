@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Colin
+ */
 @ControllerAdvice
 public class GlobalExceptionAspect {
     private static final Logger LOGGER = Logger.getLogger(GlobalExceptionAspect.class);

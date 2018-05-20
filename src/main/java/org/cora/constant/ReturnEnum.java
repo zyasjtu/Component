@@ -2,6 +2,10 @@ package org.cora.constant;
 
 import com.alibaba.fastjson.JSONObject;
 
+/**
+ * @author Colin
+ */
+
 public enum ReturnEnum {
     INVALID("9501", "invalid"),
     SUCCESS("1000", "success"),

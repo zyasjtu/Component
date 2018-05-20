@@ -10,6 +10,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.cora.constant.ReturnEnum;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author Colin
+ */
 @Component
 @Aspect
 public class ServiceExceptionAspect {

@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletRequest;
 import static com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue;
 import static org.cora.constant.GlobalConstant.DATE_FORMAT;
 
+/**
+ * @author Colin
+ */
 @RestController
 @RequestMapping(method = RequestMethod.POST)
 public class UserController {

@@ -6,6 +6,9 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+/**
+ * @author Colin
+ */
 @Data
 public class UserForm {
     @NotBlank(message = "mobile is blank", groups = {AddUser.class})

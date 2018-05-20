@@ -4,6 +4,9 @@ import org.apache.ibatis.annotations.Param;
 import org.cora.model.User;
 import org.springframework.stereotype.Repository;
 
+/**
+ * @author Colin
+ */
 @Repository
 public interface UserDao {
 

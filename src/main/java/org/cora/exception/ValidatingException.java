@@ -4,6 +4,9 @@ import lombok.Getter;
 import org.apache.ibatis.binding.BindingException;
 import org.springframework.validation.BindingResult;
 
+/**
+ * @author Colin
+ */
 @Getter
 public class ValidatingException extends BindingException{
     private BindingResult bindingResult;

@@ -8,6 +8,9 @@ import redis.clients.jedis.JedisPool;
 
 import java.util.Map;
 
+/**
+ * @author Colin
+ */
 @Repository
 public class RedisDao {
     @Autowired

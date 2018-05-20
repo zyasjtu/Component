@@ -17,12 +17,12 @@
         VALUES(#{mobile}, #{loginName}, #{password}, NOW(), NOW())
     </insert>
 
-    <select id="getUser" parameterType="String" resultMap="userMap">
+    <select id="getUser" parameterType="java.lang.String" resultMap="userMap">
         SELECT * FROM component_db.user
         WHERE mobile = #{mobile}
     </select>
 
-    <select id="checkUser" parameterType="String" resultMap="userMap">
+    <select id="checkUser" parameterType="java.lang.String" resultMap="userMap">
         SELECT * FROM component_db.user
         WHERE loginName = #{loginName} AND password = #{password}
     </select>

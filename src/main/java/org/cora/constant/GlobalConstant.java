@@ -1,5 +1,8 @@
 package org.cora.constant;
 
+/**
+ * @author Colin
+ */
 public class GlobalConstant {
     public static final String RESP_CODE = "respCode";
     public static final String RESP_MSG = "respMsg";

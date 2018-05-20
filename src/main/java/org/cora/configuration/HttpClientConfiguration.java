@@ -20,19 +20,29 @@ import java.util.concurrent.TimeUnit;
 @Configuration
 @PropertySource("classpath:spring-config.properties")
 public class HttpClientConfiguration {
-    // 最大连接数
+    /**
+     * 最大连接数
+     */
     @Value("${http.maxTotal}")
     private Integer maxTotal;
-    // 每个主机的最大并发数
+    /**
+     * 每个主机的最大并发数
+     */
     @Value("${http.defaultMaxPerRoute}")
     private Integer defaultMaxPerRoute;
-    // 创建连接的最长时间
+    /**
+     * 创建连接的最长时间
+     */
     @Value("${http.connectTimeout}")
     private Integer connectTimeout;
-    // 从连接池中获取到连接的最长时间
+    /**
+     * 从连接池中获取到连接的最长时间
+     */
     @Value("${http.connectionRequestTimeout}")
     private Integer connectionRequestTimeout;
-    // 数据传输的最长时间
+    /**
+     * 数据传输的最长时间
+     */
     @Value("${http.socketTimeout}")
     private Integer socketTimeout;
 
@@ -51,20 +61,30 @@ public class HttpClientConfiguration {
         return poolingHttpClientConnectionManager;
     }
 
-    // 定期清理无效连接
+    /**
+     * 定期清理无效连接
+     *
+     * @return evictor
+     */
     @Bean
     public IdleConnectionEvictor idleConnectionEvictor() {
         return new IdleConnectionEvictor(manager, 1L, TimeUnit.HOURS);
     }
 
-    // HttpClient对象，需要设置scope="prototype":多例对象
+    /**
+     * HttpClient对象，需要设置scope="prototype":多例对象
+     * @return httpClient
+     */
     @Bean
     @Scope("prototype")
     public CloseableHttpClient closeableHttpClient() {
         return HttpClients.custom().setConnectionManager(this.manager).build();
     }
 
-    // 请求配置
+    /**
+     * 请求配置
+     * @return config
+     */
     @Bean
     public RequestConfig requestConfig() {
         return RequestConfig.custom().setConnectTimeout(connectTimeout)
