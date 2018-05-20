@@ -19,6 +19,7 @@ public class KafkaConsumerTest {
 
     @Test
     public void onMessage() throws Exception {
-        kafkaTemplate.sendDefault("key", "data");
+        kafkaTemplate.send("test", "key", "data");
+        kafkaTemplate.send("defaultTopic", "defaultKey", "defaultData");
     }
 }

@@ -29,15 +29,25 @@
         </constructor-arg>
     </bean>
 
-    <bean id="containerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+    <bean id="defaultContainerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
+        <constructor-arg value="defaultTopic"/>
+        <property name="messageListener" ref="kafkaConsumer"/>
+    </bean>
+    <bean id="defaultContainer" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer"
+          init-method="doStart">
+        <constructor-arg ref="consumerFactory"/>
+        <constructor-arg ref="defaultContainerProperties"/>
+        <property name="concurrency" value="${kafka.consumer.concurrency}"/>
+    </bean>
+
+    <bean id="testContainerProperties" class="org.springframework.kafka.listener.config.ContainerProperties">
         <constructor-arg value="test"/>
         <property name="messageListener" ref="kafkaConsumer"/>
     </bean>
-
-    <bean id="messageListenerContainer" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer"
+    <bean id="testContainer" class="org.springframework.kafka.listener.ConcurrentMessageListenerContainer"
           init-method="doStart">
         <constructor-arg ref="consumerFactory"/>
-        <constructor-arg ref="containerProperties"/>
+        <constructor-arg ref="testContainerProperties"/>
         <property name="concurrency" value="${kafka.consumer.concurrency}"/>
     </bean>
 
