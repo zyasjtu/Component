@@ -1,7 +1,13 @@
 package org.cora.controller;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
+import org.cora.constant.ReturnEnum;
 import org.cora.util.HttpClientUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.scheduling.support.CronTrigger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,33 +42,33 @@ public class TestController {
         return JSON.toJSONString(outputMap);
     }
 
-    @RequestMapping(value = "/setSchedule.json")
-    public String setSchedule(String cronExpression) {
+    @RequestMapping(value = "/setSchedule")
+    public String setSchedule(final String cronExpression) {
         threadPoolTaskScheduler.schedule(new Runnable() {
             @Override
             public void run() {
-                LOGGER.info("set schedule!");
+                LOGGER.info("set schedule!" + cronExpression);
             }
         }, new CronTrigger(StringUtils.isBlank(cronExpression) ? "0/5 * * * * *" : cronExpression));
-        return JSON.toJSONString(ResponseUtils.success());
+        return ReturnEnum.SUCCESS.toJSONObject().toJSONString();
     }
 
-    @RequestMapping(value = "/resetSchedule.json")
-    public String resetSchedule(String cronExpression) {
+    @RequestMapping(value = "/resetSchedule")
+    public String resetSchedule(final String cronExpression) {
         threadPoolTaskScheduler.shutdown();
         threadPoolTaskScheduler.initialize();
         threadPoolTaskScheduler.schedule(new Runnable() {
             @Override
             public void run() {
-                LOGGER.info("reset schedule!");
+                LOGGER.info("reset schedule!" + cronExpression);
             }
         }, new CronTrigger(StringUtils.isBlank(cronExpression) ? "0/5 * * * * *" : cronExpression));
-        return JSON.toJSONString(ResponseUtils.success());
+        return ReturnEnum.SUCCESS.toJSONObject().toJSONString();
     }
 
-    @RequestMapping(value = "/shutdownSchedule.json")
-    public String shutdownSchedule(String cronExpression) {
+    @RequestMapping(value = "/shutdownSchedule")
+    public String shutdownSchedule() {
         threadPoolTaskScheduler.shutdown();
-        return JSON.toJSONString(ResponseUtils.success());
+        return ReturnEnum.SUCCESS.toJSONObject().toJSONString();
     }
 }
