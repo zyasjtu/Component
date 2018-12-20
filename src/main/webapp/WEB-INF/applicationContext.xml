@@ -16,6 +16,7 @@
     <context:property-placeholder location="classpath:spring-config.properties"/>
 
     <aop:aspectj-autoproxy/>
+    <task:scheduler id="threadPoolTaskScheduler" pool-size="10"/>
 
     <import resource="dataSource.xml"/>
     <import resource="kafkaProducer.xml"/>
