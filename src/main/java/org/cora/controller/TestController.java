@@ -15,6 +15,11 @@ import java.util.Map;
 @RestController
 @RequestMapping(method = RequestMethod.POST)
 public class TestController {
+    private static final Logger LOGGER = Logger.getLogger(TestController.class);
+    
+    @Autowired
+    private ThreadPoolTaskScheduler threadPoolTaskScheduler;
+    
     @RequestMapping("/input")
     public String input(String param1, String param2) {
         Map<String, String> inputMap = new HashMap<String, String>(2);
@@ -29,5 +34,35 @@ public class TestController {
         outputMap.put("param1", param2);
         outputMap.put("param2", param1);
         return JSON.toJSONString(outputMap);
+    }
+
+    @RequestMapping(value = "/setSchedule.json")
+    public String setSchedule(String cronExpression) {
+        threadPoolTaskScheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                LOGGER.info("set schedule!");
+            }
+        }, new CronTrigger(StringUtils.isBlank(cronExpression) ? "0/5 * * * * *" : cronExpression));
+        return JSON.toJSONString(ResponseUtils.success());
+    }
+
+    @RequestMapping(value = "/resetSchedule.json")
+    public String resetSchedule(String cronExpression) {
+        threadPoolTaskScheduler.shutdown();
+        threadPoolTaskScheduler.initialize();
+        threadPoolTaskScheduler.schedule(new Runnable() {
+            @Override
+            public void run() {
+                LOGGER.info("reset schedule!");
+            }
+        }, new CronTrigger(StringUtils.isBlank(cronExpression) ? "0/5 * * * * *" : cronExpression));
+        return JSON.toJSONString(ResponseUtils.success());
+    }
+
+    @RequestMapping(value = "/shutdownSchedule.json")
+    public String shutdownSchedule(String cronExpression) {
+        threadPoolTaskScheduler.shutdown();
+        return JSON.toJSONString(ResponseUtils.success());
     }
 }
